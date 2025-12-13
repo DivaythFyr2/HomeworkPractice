@@ -1,0 +1,11 @@
+id,name,email,address
+c2f6b2b4-6f0b-4d5d-9db8-7c1b8f531d44,"Иван Петров","ivan.petrov@example.com","Ростов-на-Дону, ул. Пушкинская, 10"
+8a8e0a89-5484-4df1-9a1c-0e0dbf6b47cd,"Анна Смирнова","anna.smirnova@example.com","Москва, ул. Тверская, 7"
+3d7d6c89-2d6b-4f77-9f3d-9ab2cb1a0c2e,"Сергей Кузнецов","sergey.kuznetsov@example.com","Санкт-Петербург, Невский пр., 25"
+f6de9153-42d0-4a67-9c53-7e7c9d2c0f3c,"Мария Иванова","maria.ivanova@example.com","Казань, ул. Баумана, 3"
+5b7b4208-4b85-4c3f-9d8a-0c2f2a1a9c11,"Дмитрий Орлов","d.orlov@example.com","Екатеринбург, пр-т Ленина, 19"
+1f6c8a1e-2b9a-4c2b-9d4e-1f7c8e2d0a55,"Екатерина Новикова","katya.novikova@example.com","Новосибирск, Красный проспект, 88"
+a0f1a2b3-c4d5-4e6f-8a9b-0c1d2e3f4a5b,"Алексей Волков","alex.volkov@example.com","Краснодар, ул. Северная, 45"
+b1c2d3e4-f5a6-47b8-9c0d-1e2f3a4b5c6d,"Ольга Соколова","olga.sokolova@example.com","Нижний Новгород, Большая Покровская, 12"
+9f3e2d1c-0b9a-4c8d-8e7f-6a5b4c3d2e1f,"Никита Фёдоров","nikita.fedorov@example.com","Самара, ул. Ленинградская, 6"
+7a1b2c3d-4e5f-4a6b-8c9d-0e1f2a3b4c5d,"Полина Морозова","polina.morozova@example.com","Воронеж, пр-т Революции, 14"

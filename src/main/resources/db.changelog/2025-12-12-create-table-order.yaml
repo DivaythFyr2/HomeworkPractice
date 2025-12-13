@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-12-create-table-order
+      author: Vlad Afanasev
+      changes:
+        - createTable:
+            tableName: orders
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total_amount
+                  type: numeric(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: order_status
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp with time zone
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: orders
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_order_user
+
+        - createIndex:
+            tableName: orders
+            indexName: idx_order_user_id
+            columns:
+              - column:
+                  name: user_id
+

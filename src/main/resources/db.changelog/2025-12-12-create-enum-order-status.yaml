@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-12-12-create-enum-order-status
+      author: Vlad Afanasev
+      changes:
+        - sql:
+            sql: |
+              CREATE TYPE order_status AS ENUM (
+                'NEW',
+                'PAID',
+                'SHIPPED',
+                'DELIVERED',
+                'CANCELLED'
+              );
