@@ -4,13 +4,14 @@ import com.afavlad.homeworkpractice.dto.request.CreateOrderRequest;
 import com.afavlad.homeworkpractice.dto.request.UpdateOrderStatusRequest;
 import com.afavlad.homeworkpractice.dto.response.OrderDetailsResponse;
 import com.afavlad.homeworkpractice.dto.response.OrderSummaryResponse;
+import com.afavlad.homeworkpractice.dto.response.PageResponse;
 import com.afavlad.homeworkpractice.service.OrderService;
 import com.afavlad.homeworkpractice.view.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
-import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +33,9 @@ public class OrderController {
 
   @GetMapping
   @JsonView(Views.OrderSummary.class)
-  public List<OrderSummaryResponse> getUserOrders(@RequestParam UUID userId) {
-    return orderService.getAllByUserId(userId);
+  public PageResponse<OrderSummaryResponse> getUserOrders(@RequestParam UUID userId,
+      Pageable pageable) {
+    return orderService.getAllByUserId(userId, pageable);
   }
 
   @GetMapping("/{orderId}")

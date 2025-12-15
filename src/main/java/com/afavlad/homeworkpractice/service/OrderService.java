@@ -5,6 +5,7 @@ import com.afavlad.homeworkpractice.dto.request.CreateOrderRequest;
 import com.afavlad.homeworkpractice.dto.request.UpdateOrderStatusRequest;
 import com.afavlad.homeworkpractice.dto.response.OrderDetailsResponse;
 import com.afavlad.homeworkpractice.dto.response.OrderSummaryResponse;
+import com.afavlad.homeworkpractice.dto.response.PageResponse;
 import com.afavlad.homeworkpractice.entity.Order;
 import com.afavlad.homeworkpractice.entity.OrderItem;
 import com.afavlad.homeworkpractice.entity.User;
@@ -17,6 +18,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,14 +32,15 @@ public class OrderService {
   private final UserRepository userRepository;
   private final OrderMapper orderMapper;
 
-  public List<OrderSummaryResponse> getAllByUserId(UUID userId) {
+  public PageResponse<OrderSummaryResponse> getAllByUserId(UUID userId, Pageable pageable) {
     if (!userRepository.existsById(userId)) {
       throw new NotFoundException("User not found: " + userId);
     }
-    return orderRepository.findAllByUserId(userId)
-        .stream()
-        .map(orderMapper::toSummary)
-        .toList();
+
+    Page<OrderSummaryResponse> page = orderRepository.findAllByUserId(userId, pageable)
+        .map(orderMapper::toSummary);
+
+    return PageResponse.of(page);
   }
 
   public OrderDetailsResponse getById(UUID orderId) {

@@ -2,18 +2,17 @@ package com.afavlad.homeworkpractice.service;
 
 import com.afavlad.homeworkpractice.dto.request.CreateUserRequest;
 import com.afavlad.homeworkpractice.dto.request.UpdateUserRequest;
-import com.afavlad.homeworkpractice.dto.response.UserDetailsResponse;
+import com.afavlad.homeworkpractice.dto.response.PageResponse;
 import com.afavlad.homeworkpractice.dto.response.UserSummaryResponse;
-import com.afavlad.homeworkpractice.entity.Order;
 import com.afavlad.homeworkpractice.entity.User;
 import com.afavlad.homeworkpractice.exception.ConflictException;
 import com.afavlad.homeworkpractice.exception.NotFoundException;
 import com.afavlad.homeworkpractice.mapper.UserMapper;
-import com.afavlad.homeworkpractice.repository.OrderRepository;
 import com.afavlad.homeworkpractice.repository.UserRepository;
-import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,24 +22,18 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
   private final UserRepository userRepository;
-  private final OrderRepository orderRepository;
   private final UserMapper userMapper;
 
-  public List<UserSummaryResponse> getAll() {
-    return userRepository.findAll()
-        .stream()
-        .map(userMapper::toSummary)
-        .toList();
+  public PageResponse<UserSummaryResponse> getAll(Pageable pageable) {
+    Page<UserSummaryResponse> page = userRepository.findAll(pageable)
+        .map(userMapper::toSummary);
+    return PageResponse.of(page);
   }
 
-  public UserDetailsResponse getByIdWithOrders(UUID id) {
-    User user = userRepository.findUserWithOrdersById(id)
+  public UserSummaryResponse getById(UUID id) {
+    User user = userRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("User not found: " + id));
-
-    List<Order> ordersWithItems = orderRepository.findAllByUserId(id);
-    user.setOrders(ordersWithItems);
-
-    return userMapper.toDetails(user);
+    return userMapper.toSummary(user);
   }
 
   @Transactional
@@ -57,7 +50,7 @@ public class UserService {
 
     User savedUser = userRepository.save(user);
     return userMapper.toSummary(savedUser);
-}
+  }
 
   @Transactional
   public UserSummaryResponse update(UUID id, UpdateUserRequest dto) {

@@ -20,7 +20,8 @@ public record OrderItemResponse(
     @JsonView(Views.OrderDetails.class)
     int quantity,
 
-    @JsonView(Views.OrderDetails.class) BigDecimal unitPrice
+    @JsonView(Views.OrderDetails.class)
+    BigDecimal unitPrice
 ) {
 
 }

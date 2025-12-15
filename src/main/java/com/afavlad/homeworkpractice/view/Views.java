@@ -1,6 +1,7 @@
 package com.afavlad.homeworkpractice.view;
 
 public class Views {
+
   public interface UserSummary{}
   public interface UserDetails extends UserSummary, OrderDetails {}
 

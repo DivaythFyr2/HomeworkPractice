@@ -4,7 +4,6 @@ import com.afavlad.homeworkpractice.view.Views;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.UUID;
 import lombok.Builder;
 
@@ -24,10 +23,7 @@ public record UserDetailsResponse(
 
     @JsonView(Views.UserSummary.class)
     @JsonProperty("created_at")
-    OffsetDateTime createdAt,
-
-    @JsonView(Views.UserDetails.class)
-    List<OrderDetailsResponse> orders
+    OffsetDateTime createdAt
 ) {
 
 }
