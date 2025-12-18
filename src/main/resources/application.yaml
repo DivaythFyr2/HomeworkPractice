@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/company_management_db
+    username: postgres
+    password: qwerty229
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  sql:
+    init:
+      schema-locations:
+        - classpath:database/schema/001_extensions.sql
+        - classpath:database/schema/002_departments.sql
+        - classpath:database/schema/003_employees.sql
+      data-locations:
+        - classpath:database/data/001_departments-data.sql
+        - classpath:database/data/002_employees-data.sql
