@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class DepartmentService {
 
   private final DepartmentRepository departmentRepository;
@@ -30,12 +29,14 @@ public class DepartmentService {
     return departmentMapper.toResponse(saved);
   }
 
+  @Transactional(readOnly = true)
   public DepartmentResponse getById(UUID id) {
     Department department = departmentRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Department with id " + id + " not found"));
     return departmentMapper.toResponse(department);
   }
 
+  @Transactional(readOnly = true)
   public List<DepartmentResponse> getAll() {
     return departmentRepository.findAll().stream()
         .map(departmentMapper::toResponse)
@@ -48,7 +49,8 @@ public class DepartmentService {
         .orElseThrow(() -> new NotFoundException("Department with id " + id + " not found"));
 
     String newName = request.name();
-    if (!department.getName().equalsIgnoreCase(newName) && departmentRepository.existsByName(newName)) {
+    if (!department.getName().equalsIgnoreCase(newName) && departmentRepository.existsByName(
+        newName)) {
       throw new ConflictException("Department with name '" + newName + "' already exists");
     }
 

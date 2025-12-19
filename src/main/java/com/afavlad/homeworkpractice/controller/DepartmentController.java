@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,33 +28,31 @@ public class DepartmentController {
   private final DepartmentService departmentService;
 
   @GetMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public DepartmentResponse getById(@PathVariable UUID id) {
-    return departmentService.getById(id);
+  public ResponseEntity<DepartmentResponse> getById(@PathVariable UUID id) {
+    return ResponseEntity.ok(departmentService.getById(id));
   }
 
   @GetMapping
-  @ResponseStatus(HttpStatus.OK)
-  public List<DepartmentResponse> getAll() {
-    return departmentService.getAll();
+  public ResponseEntity<List<DepartmentResponse>> getAll() {
+    return ResponseEntity.ok(departmentService.getAll());
   }
 
   @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  public DepartmentResponse create(@Valid @RequestBody DepartmentRequest request) {
-    return departmentService.create(request);
+  public ResponseEntity<DepartmentResponse> create(@Valid @RequestBody DepartmentRequest request) {
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(departmentService.create(request));
   }
 
   @PutMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public DepartmentResponse update(@PathVariable UUID id,
+  public ResponseEntity<DepartmentResponse> update(@PathVariable UUID id,
       @Valid @RequestBody DepartmentRequest request) {
-    return departmentService.update(id, request);
+    return ResponseEntity.ok(departmentService.update(id, request));
   }
 
   @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable UUID id) {
+  public ResponseEntity<Void> delete(@PathVariable UUID id) {
     departmentService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }

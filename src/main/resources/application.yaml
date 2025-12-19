@@ -21,3 +21,9 @@ spring:
       data-locations:
         - classpath:database/data/001_departments-data.sql
         - classpath:database/data/002_employees-data.sql
+logging:
+  level:
+    org.springframework.transaction: trace
+    org.springframework.orm.jpa.JpaTransactionManager: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE

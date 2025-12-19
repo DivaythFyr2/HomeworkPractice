@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class EmployeeService {
 
   private final EmployeeRepository employeeRepository;
@@ -44,12 +43,14 @@ public class EmployeeService {
     return employeeMapper.toResponse(saved);
   }
 
+  @Transactional(readOnly = true)
   public EmployeeResponse getById(UUID id) {
     Employee employee = employeeRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Employee with id " + id + " not found"));
     return employeeMapper.toResponse(employee);
   }
 
+  @Transactional(readOnly = true)
   public List<EmployeeResponse> getAll() {
     return employeeRepository.findAll().stream()
         .map(employeeMapper::toResponse)
@@ -83,6 +84,7 @@ public class EmployeeService {
     employeeRepository.deleteById(id);
   }
 
+  @Transactional(readOnly = true)
   public List<EmployeeSummaryResponse> getSummary() {
     List<EmployeeProjection> projections = employeeRepository.findAllBy();
     return projections.stream()
@@ -91,6 +93,7 @@ public class EmployeeService {
         .toList();
   }
 
+  @Transactional(readOnly = true)
   public List<EmployeeSummaryResponse> getSummaryByDepartment(UUID departmentId) {
     List<EmployeeProjection> projections = employeeRepository.findByDepartmentId(departmentId);
     return projections.stream()

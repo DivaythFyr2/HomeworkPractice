@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,45 +28,42 @@ public class EmployeeController {
   private final EmployeeService employeeService;
 
   @GetMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public EmployeeResponse getById(@PathVariable UUID id) {
-    return employeeService.getById(id);
+  public ResponseEntity<EmployeeResponse> getById(@PathVariable UUID id) {
+    return ResponseEntity.ok(employeeService.getById(id));
   }
 
   @GetMapping
-  @ResponseStatus(HttpStatus.OK)
-  public List<EmployeeResponse> getAll() {
-    return employeeService.getAll();
+  public ResponseEntity<List<EmployeeResponse>> getAll() {
+    return ResponseEntity.ok(employeeService.getAll());
   }
 
   @GetMapping("/summary")
-  @ResponseStatus(HttpStatus.OK)
-  public List<EmployeeSummaryResponse> getSummary() {
-    return employeeService.getSummary();
+  public ResponseEntity<List<EmployeeSummaryResponse>> getSummary() {
+    return ResponseEntity.ok(employeeService.getSummary());
   }
 
   @GetMapping("/summary/by-department/{departmentId}")
-  @ResponseStatus(HttpStatus.OK)
-  public List<EmployeeSummaryResponse> getSummaryByDepartment(@PathVariable UUID departmentId) {
-    return employeeService.getSummaryByDepartment(departmentId);
+  public ResponseEntity<List<EmployeeSummaryResponse>> getSummaryByDepartment(
+      @PathVariable UUID departmentId) {
+    return ResponseEntity.ok(employeeService.getSummaryByDepartment(departmentId));
   }
 
   @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  public EmployeeResponse create(@Valid @RequestBody EmployeeRequest request) {
-    return employeeService.create(request);
+  public ResponseEntity<EmployeeResponse> create(@Valid @RequestBody EmployeeRequest request) {
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .contentType(MediaType.APPLICATION_JSON)
+        .body(employeeService.create(request));
   }
 
   @PutMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public EmployeeResponse update(@PathVariable UUID id,
+  public ResponseEntity<EmployeeResponse> update(@PathVariable UUID id,
       @Valid @RequestBody EmployeeRequest request) {
-    return employeeService.update(id, request);
+    return ResponseEntity.ok(employeeService.update(id, request));
   }
 
   @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable UUID id) {
+  public ResponseEntity<Void> delete(@PathVariable UUID id) {
     employeeService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }
