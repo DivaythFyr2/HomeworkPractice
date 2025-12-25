@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-extensions
+      author: Vlad Afanasev
+      changes:
+        - sqlFile:
+            path: sql/001-create-extensions.sql
+            relativeToChangelogFile: true

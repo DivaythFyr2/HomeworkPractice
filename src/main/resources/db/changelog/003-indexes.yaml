@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-indexes
+      author: Vlad Afanasev
+      changes:
+        - sqlFile:
+            path: sql/003-indexes.sql
+            relativeToChangelogFile: true

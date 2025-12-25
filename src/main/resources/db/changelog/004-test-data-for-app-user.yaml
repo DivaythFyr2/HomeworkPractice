@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-test-data-for-app-user
+      author: Vlad Afanasev
+      context: dev
+      changes:
+        - sqlFile:
+            path: sql/004-test-data-for-app-user.sql
+            relativeToChangelogFile: true
